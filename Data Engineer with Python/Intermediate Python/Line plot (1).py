@@ -322,6 +322,7 @@ pop = [2.53,
  10.84,
  10.85]
 
+
 # Print the last item from year and pop
 print (year[-1])
 print (pop[-1])
@@ -334,3 +335,5 @@ plt.plot(year, pop)
 
 # Display the plot with plt.show()
 plt.show()
+
+pop[year.index(2030)]
