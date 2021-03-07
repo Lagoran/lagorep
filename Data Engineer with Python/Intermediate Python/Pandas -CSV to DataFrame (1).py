@@ -30,4 +30,5 @@ index= ['i','am','number','one','nelly','dilema','kelly']
 
 cars.index = index
 
+print(cars.shape)
 print(cars)
