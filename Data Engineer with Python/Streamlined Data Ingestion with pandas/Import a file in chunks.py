@@ -178,3 +178,15 @@ vt_data_next500 = pd.read_csv("c:/Users/a1bg468812/PycharmProjects/lagorep/Data 
 # View the Vermont data frames to confirm they're different
 #print(vt_data_first500.head())
 print(vt_data_next500.head())
+
+print(vt_data_next500.dtypes)
+
+# Create dict specifying that 0s in zipcode are NA values
+null_values = {"zipcode":0}
+
+# Load csv using na_values keyword argument
+data = pd.read_csv("c:/Users/a1bg468812/PycharmProjects/lagorep/Data Engineer with Python/Data files/vt_tax_data_2016.csv",
+                   na_values=null_values)
+
+# View rows with NA ZIP codes
+print(data[data.zipcode.isna()])
