@@ -15,13 +15,14 @@ hint:
 https://stackoverflow.com/questions/61507488/how-would-i-update-each-dataframe-in-ordereddict
 '''
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 # Create an empty data frame
 all_responses = pd.DataFrame()
 
-responses = pd.read_excel("c:/Users/a1bg468812/PycharmProjects/lagorep/Data Engineer with Python/Data files/fcc-new-coder-survey.xlsx",
-                                sheet_name=None)
+responses = pd.read_excel("c:/Users/a1bg468812/PycharmProjects/lagorep/Data Engineer with Python/Data files/fcc-new-coder-survey.xls",
+                          sheet_name=None,
+                          header=2)
 
 # Set up for loop to iterate through values in responses
 for df in responses.values():

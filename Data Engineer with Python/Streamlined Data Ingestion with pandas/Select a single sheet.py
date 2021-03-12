@@ -30,3 +30,4 @@ all_survey_data = pd.read_excel("c:/Users/a1bg468812/PycharmProjects/lagorep/Dat
 
 # View the data type of all_survey_data
 print(type(all_survey_data))
+print(all_survey_data)

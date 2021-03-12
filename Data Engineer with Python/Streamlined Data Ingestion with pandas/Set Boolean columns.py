@@ -21,7 +21,7 @@ print(survey_data)
 print(survey_data.dtypes())
 
 # Load file with Yes as a True value and No as a False value
-survey_subset = pd.read_excel("c:/Users/a1bg468812/PycharmProjects/lagorep/Data Engineer with Python/Data files/fcc-new-coder-survey.xlsx",
+survey_subset = pd.read_excel("c:/Users/a1bg468812/PycharmProjects/lagorep/Data Engineer with Python/Data files/fcc-new-coder-survey.xls",
                               dtype={"HasDebt": bool,
                               "AttendedBootCampYesNo": bool},
                               true_values=["Yes"],

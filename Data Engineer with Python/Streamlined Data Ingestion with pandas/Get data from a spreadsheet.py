@@ -15,7 +15,8 @@ Print the first few records of survey_responses.
 import pandas as pd
 
 # Read spreadsheet and assign it to survey_responses
-survey_responses = pd.read_excel("c:/Users/a1bg468812/PycharmProjects/lagorep/Data Engineer with Python/Data files/fcc-new-coder-survey.xlsx")
+survey_responses = pd.read_excel("c:/Users/a1bg468812/PycharmProjects/lagorep/Data Engineer with Python/Data files/fcc-new-coder-survey.xlsx",
+                                 header=2)
 
 # View the head of the data frame
 print(survey_responses.head())
