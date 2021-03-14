@@ -30,3 +30,11 @@ survey_data = pd.read_excel("c:/Users/a1bg468812/PycharmProjects/lagorep/Data En
 print(survey_data.head())
 print(survey_data['Age'].head())
 print(survey_data['Part2EndTime'].head())
+
+
+# Parse datetimes and assign result back to Part2EndTime
+#survey_data["Part2EndTime"] = pd.to_datetime(survey_data["Part2EndTime"],
+#                                             format="%m%d%Y %H:%M:%S")
+
+# Print first few values of Part2EndTime
+#print(survey_data.Part2EndTime.head())
