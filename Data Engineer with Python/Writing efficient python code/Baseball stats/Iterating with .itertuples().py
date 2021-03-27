@@ -333,8 +333,14 @@ def calc_run_diff(runs_scored, runs_allowed):
     # df = pd.DataFrame({'Animal': ['Falcon', 'Falcon',
     #                               'Parrot', 'Parrot'],
     #                    'Max Speed': [380., 370., 24., 26.]})
-
 # print(rangers_df.head())
+
+def text_playoffs(num_playoffs):
+    if num_playoffs == 1:
+        return 'Yes'
+    else:
+        return 'No'
+
 
 # Loop over the DataFrame and print each row
 for row in rangers_df.itertuples():
@@ -388,3 +394,35 @@ plt.plot(rangers_df['Year'], rangers_df['RD'])
 plt.show()
 
 print(type(rangers_df['Year']))
+
+
+# create an dataframe from the existing one omitting non-int columns
+#new = old[['A', 'C', 'D']].copy()
+#https://stackoverflow.com/questions/34682828/extracting-specific-selected-columns-to-new-dataframe-as-a-copy
+
+#
+# rangers_int_df = rangers_df[['RS', 'RA', 'W', 'G', 'Playoffs', 'RD']]
+# print(rangers_int_df.head())
+# rangers_int_df.describe()
+# rangers_int_df.info()
+
+#>>> pd.to_numeric(s) # convert everything to float values
+# convert all columns of DataFrame
+#df = df.apply(pd.to_numeric) # convert all columns of DataFrame
+
+rangers_int_df = rangers_df[['RS', 'RA', 'W', 'G', 'Playoffs', 'RD']].apply(pd.to_numeric)
+print(rangers_int_df.head())
+rangers_int_df.describe()
+rangers_int_df.info()
+
+# Gather sum of all columns by per column level
+stat_totals = rangers_int_df.apply(sum, axis=0)
+print(stat_totals)
+
+# Gather total runs scored in all games per year
+total_runs_scored = rangers_int_df[['RS', 'RA']].apply(sum, axis=1)
+print(total_runs_scored.head())
+
+# Convert numeric playoffs to text by applying text_playoffs()
+textual_playoffs = rangers_int_df.apply(lambda row: text_playoffs(row['Playoffs']), axis=1)
+print(textual_playoffs.head())
