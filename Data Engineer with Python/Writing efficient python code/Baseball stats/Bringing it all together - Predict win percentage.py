@@ -1,21 +1,19 @@
 '''
-Settle a debate with .apply()
-Word has gotten to the Arizona Diamondbacks about your awesome analytics skills. They'd like for you to help settle a debate amongst the managers. One manager claims that the team has made the playoffs every year they have had a win percentage of 0.50 or greater. Another manager says this is not true.
+Bringing it all together: Predict win percentage
+A pandas DataFrame (baseball_df) has been loaded into your session. For convenience, a dictionary describing each column within baseball_df has been printed into your console. You can reference these descriptions throughout the exercise.
 
-Let's use the below function and the .apply() method to see which manager is correct.
+You'd like to attempt to predict a team's win percentage for a given season by using the team's total runs scored in a season ('RS') and total runs allowed in a season ('RA') with the following function:
 
-def calc_win_perc(wins, games_played):
-    win_perc = wins / games_played
-    return np.round(win_perc,2)
-A DataFrame named dbacks_df has been loaded into your session.
+def predict_win_perc(RS, RA):
+    prediction = RS ** 2 / (RS ** 2 + RA ** 2)
+    return np.round(prediction, 2)
+Let's compare the approaches you've learned to calculate a predicted win percentage for each season (or row) in your DataFrame.
 
 Instructions 1/4
-1 XP
-Print the first five rows of the dbacks_df DataFrame to see what the data looks like.
-
-Hint
-Use the .head() method to display the first few rows of a DataFrame.
+25 XP
+Use a for loop and .itertuples() to predict the win percentage for each row of baseball_df with the predict_win_perc() function. Save each row's predicted win percentage as win_perc_pred and append each to the win_perc_preds_loop list.
 '''
+
 
 import numpy as np
 import pandas as pd
@@ -327,53 +325,41 @@ rangers_df=pd.DataFrame({'Team':[
 ]
                          })
 
-def calc_run_diff(runs_scored, runs_allowed):
-
-    run_diff = runs_scored - runs_allowed
-
-    return run_diff
-
-    # reference
-    #
-    # df = pd.DataFrame({'Animal': ['Falcon', 'Falcon',
-    #                               'Parrot', 'Parrot'],
-    #                    'Max Speed': [380., 370., 24., 26.]})
-# print(rangers_df.head())
-
-def text_playoffs(num_playoffs):
-    if num_playoffs == 1:
-        return 'Yes'
-    else:
-        return 'No'
-
-
-
-def calc_win_perc(wins, games_played):
-    win_perc = wins / games_played
-    return np.round(win_perc,2)
-
-
-# Display the first five rows of the DataFrame
-# print(rangers_df.head())
-# rangers_df.describe()
-
 rangers_int_df = rangers_df[['RS', 'RA', 'W', 'G', 'Playoffs']].apply(pd.to_numeric)
 print(rangers_int_df.head())
 rangers_int_df.describe()
 rangers_int_df.info()
 
-# Create a win percentage Series
-win_percs = rangers_int_df.apply(lambda row: calc_win_perc(row['W'], row['G']), axis=1)
-print(win_percs, '\n')
+def predict_win_perc(RS, RA):
+    prediction = RS ** 2 / (RS ** 2 + RA ** 2)
+    return np.round(prediction, 2)
 
-plt.plot(win_percs)
-# plt.plot(rangers_df['Year'], rangers_df['Playoffs'])
-plt.show()
+win_perc_preds_loop = []
 
-# Append a new column to rangers_int_df
-rangers_int_df['WP'] = win_percs
-rangers_df['WP'] = win_percs
-print(rangers_int_df, '\n')
+# Use a loop and .itertuples() to collect each row's predicted win percentage
+for row in rangers_int_df.itertuples():
+    runs_scored = row.RS
+    runs_allowed = row.RA
+    win_perc_pred = predict_win_perc(runs_scored, runs_allowed)
+    win_perc_preds_loop.append(win_perc_pred)
 
-# Display dbacks_df where WP is greater than 0.50
-print(rangers_df[rangers_df['WP'] >= 0.50])
+rangers_int_df['Win_Predict_loop'] = win_perc_preds_loop
+
+print(rangers_int_df.head())
+rangers_int_df.describe()
+rangers_int_df.info()
+
+# Apply predict_win_perc to each row of the DataFrame
+win_perc_preds_apply = rangers_int_df.apply(lambda row: predict_win_perc(row['RS'], row['RA']), axis=1)
+
+
+rangers_int_df['Win_Predict_apply'] = win_perc_preds_loop
+
+print(rangers_int_df.head())
+rangers_int_df.describe()
+rangers_int_df.info()
+
+# Calculate the win percentage predictions using NumPy arrays
+win_perc_preds_np = predict_win_perc(rangers_int_df['RS'].values, rangers_int_df['RA'].values)
+rangers_int_df['WP_preds'] = win_perc_preds_np
+print(rangers_int_df.head())

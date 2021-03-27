@@ -1,20 +1,30 @@
 '''
-Settle a debate with .apply()
-Word has gotten to the Arizona Diamondbacks about your awesome analytics skills. They'd like for you to help settle a debate amongst the managers. One manager claims that the team has made the playoffs every year they have had a win percentage of 0.50 or greater. Another manager says this is not true.
-
-Let's use the below function and the .apply() method to see which manager is correct.
+Replacing .iloc with underlying arrays
+Now that you have a better grasp on a DataFrame's internals let's update one of your previous analyses to leverage a DataFrame's underlying arrays. You'll revisit the win percentage calculations you performed row by row with the .iloc method:
 
 def calc_win_perc(wins, games_played):
     win_perc = wins / games_played
     return np.round(win_perc,2)
-A DataFrame named dbacks_df has been loaded into your session.
 
-Instructions 1/4
-1 XP
-Print the first five rows of the dbacks_df DataFrame to see what the data looks like.
+win_percs_list = []
 
-Hint
-Use the .head() method to display the first few rows of a DataFrame.
+for i in range(len(baseball_df)):
+    row = baseball_df.iloc[i]
+
+    wins = row['W']
+    games_played = row['G']
+
+    win_perc = calc_win_perc(wins, games_played)
+
+    win_percs_list.append(win_perc)
+
+baseball_df['WP'] = win_percs_list
+Let's update this analysis to use arrays instead of the .iloc method. A DataFrame (baseball_df) has been loaded into your session.
+
+Instructions 1/3
+50 XP
+Use the right method to collect the underlying 'W' and 'G' arrays of baseball_df and pass them directly into the calc_win_perc() function. Store the result as a variable called win_percs_np.
+
 '''
 
 import numpy as np
@@ -327,53 +337,38 @@ rangers_df=pd.DataFrame({'Team':[
 ]
                          })
 
-def calc_run_diff(runs_scored, runs_allowed):
-
-    run_diff = runs_scored - runs_allowed
-
-    return run_diff
-
-    # reference
-    #
-    # df = pd.DataFrame({'Animal': ['Falcon', 'Falcon',
-    #                               'Parrot', 'Parrot'],
-    #                    'Max Speed': [380., 370., 24., 26.]})
-# print(rangers_df.head())
-
-def text_playoffs(num_playoffs):
-    if num_playoffs == 1:
-        return 'Yes'
-    else:
-        return 'No'
-
-
-
-def calc_win_perc(wins, games_played):
-    win_perc = wins / games_played
-    return np.round(win_perc,2)
-
-
-# Display the first five rows of the DataFrame
-# print(rangers_df.head())
-# rangers_df.describe()
-
 rangers_int_df = rangers_df[['RS', 'RA', 'W', 'G', 'Playoffs']].apply(pd.to_numeric)
 print(rangers_int_df.head())
 rangers_int_df.describe()
 rangers_int_df.info()
 
-# Create a win percentage Series
-win_percs = rangers_int_df.apply(lambda row: calc_win_perc(row['W'], row['G']), axis=1)
-print(win_percs, '\n')
+def calc_win_perc(wins, games_played):
+    win_perc = wins / games_played
+    return np.round(win_perc,2)
 
-plt.plot(win_percs)
-# plt.plot(rangers_df['Year'], rangers_df['Playoffs'])
-plt.show()
+win_percs_list = []
 
-# Append a new column to rangers_int_df
-rangers_int_df['WP'] = win_percs
-rangers_df['WP'] = win_percs
-print(rangers_int_df, '\n')
+for i in range(len(rangers_df)):
+    row = rangers_df.iloc[i]
 
-# Display dbacks_df where WP is greater than 0.50
-print(rangers_df[rangers_df['WP'] >= 0.50])
+    wins = int(row['W'])
+    games_played = int(row['G'])
+
+    win_perc = calc_win_perc(wins, games_played)
+
+    win_percs_list.append(win_perc)
+
+rangers_int_df['WP'] = win_percs_list
+
+print(rangers_int_df.head())
+rangers_int_df.describe()
+rangers_int_df.info()
+
+# Use the W array and G array to calculate win percentages
+win_percs_np = calc_win_perc(rangers_int_df['W'].array, rangers_int_df['G'].array)
+
+# Append a new column to baseball_df that stores all win percentages
+rangers_int_df['WP_array'] = win_percs_np
+
+print(rangers_int_df.head())
+
