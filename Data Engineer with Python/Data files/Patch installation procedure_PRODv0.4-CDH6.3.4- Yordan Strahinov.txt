@@ -1,0 +1,8 @@
+﻿Production patch procedure
+
+ok-request sudo right on the cluster
+ok-Stefan Kainz-Inform stakeholders - for the beginning of the activities
+ok-list of users to be informed - list provided from Stefan Kainz
+ok-inform operation control
+ok>invenium
+ok>...etc
