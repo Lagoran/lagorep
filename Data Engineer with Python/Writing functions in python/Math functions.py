@@ -10,20 +10,18 @@ def create_math_function(func_name):
     if func_name == 'add':
         def add(a, b):
             return a + b
-
         return add
+
     elif func_name == 'subtract':
         # Define the subtract() function
         def subtract(a, b):
             return a - b
-
         return subtract
 
-    if func_name == 'multiply' :
+    elif func_name == 'multiply' :
         #Define the multiplpy() function
         def multiply(a, b):
             return a * b
-
         return multiply
 
     else:
