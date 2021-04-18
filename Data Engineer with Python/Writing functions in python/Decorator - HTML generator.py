@@ -37,3 +37,29 @@ def hello(name):
 
 
 print(hello('Alice'))
+
+
+# Make hello() return bolded text
+@html('<b>', '</b>')
+def hello(name):
+    return 'Hello {}!'.format(name)
+
+
+print(hello('Alice'))
+
+
+# Make goodbye() return italicized text
+@html('<i>', '</i>')
+def goodbye(name):
+    return 'Goodbye {}.'.format(name)
+
+
+print(goodbye('Alice'))
+
+# Wrap the result of hello_goodbye() in <div> and </div>
+@html('<div>', '</div>')
+def hello_goodbye(name):
+    return '\n{}\n{}\n'.format(hello(name), goodbye(name))
+
+
+print(hello_goodbye('Alice'))
